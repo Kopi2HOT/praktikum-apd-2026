@@ -1,0 +1,85 @@
+# Validasi Login
+username_benar = "rahmat"
+password_benar = "029"
+
+sisa_percobaan = 3
+login_berhasil = False
+
+print("=== LOGIN PENGATURAN DATA NILAI ===")
+while sisa_percobaan > 0:
+    username = input("Masukkan username : ")
+    password = input("Masukkan password : ")
+
+    if username == username_benar and password == password_benar:
+        print(f"Login berhasil! Selamat datang {username_benar}")
+        login_berhasil = True
+        break
+    else:
+        sisa_percobaan -= 1
+        if sisa_percobaan > 0:
+            print(f"Username atau password salah! Sisa percobaan: {sisa_percobaan}\n")
+        else:
+            print("\nAnda telah salah memasukkan login sebanyak 3 kali. Akses ditolak.")
+
+# Input Data Siswa
+if login_berhasil:
+    data_siswa = [] 
+
+    ulang = "ya"
+    while ulang == "ya":
+        print("\n" + "="*40)
+        print("INPUT DATA SISWA")
+        print("="*40)
+        
+        nama = input("Masukkan Nama Siswa  : ")
+        kelas = input("Masukkan Kelas Siswa : ")
+        ikut = input("Apakah siswa mengikuti ujian? (ya/tidak): ")
+
+        if ikut != 'ya':
+            data_siswa.append([nama, kelas, "tidak", 0, "Perlu belajar lagi"])
+            print("Siswa tidak mengikuti ujian. Nilai otomatis 0.")
+            
+            ulang = input("\nApakah ingin menginput data lagi? (ya/tidak): ")
+            continue 
+
+        soal_benar = int(input("Masukkan jumlah soal BENAR : "))
+        soal_salah = int(input("Masukkan jumlah soal SALAH : "))
+
+        # Menghitung Nilai Ujian
+        nilai = soal_benar * 5
+
+        # Kategori Nilai
+        if nilai >= 80 and nilai <= 100:
+            kategori = "Sangat baik"
+        elif nilai >= 60 and nilai <= 79:
+            kategori = "Baik"
+        elif nilai >= 40 and nilai <= 59:
+            kategori = "Cukup"
+        else:
+            kategori = "Perlu belajar lagi"
+
+        # Menyimpan data siswa ke list
+        data_siswa.append([nama, kelas, "ya", nilai, kategori])
+
+        # Mengulang input
+        ulang = input("\nApakah ingin menginput data lagi? (ya/tidak): ")
+
+    # OUTPUT PER KELAS (NESTED FOR)
+    print("\n" + "="*40)
+    print("REKAP DATA SISWA")
+    print("="*40)
+    daftar_kelas = []
+    for siswa in data_siswa:
+        nama_kelas = siswa[1]
+        if nama_kelas not in daftar_kelas:
+            daftar_kelas.append(nama_kelas)
+
+    for k in daftar_kelas:          
+        print(f"\nkelas {k}")
+        for siswa in data_siswa:    
+            if siswa[1] == k:
+                print(f"nama : {siswa[0]}")
+                print(f"ikut ujian : {siswa[2]}")
+                print(f"nilai : {siswa[3]}")
+                print(f"kategori : {siswa[4]}")
+                print() 
